@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html ng-app="exampleApp">
+<title>10</title>
+<script src="angular/angular.js"></script>
+<link href="bootstrap-3.3.5-dist/css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="bootstrap-3.3.5-dist/css/bootstrap-theme.css" rel="stylesheet" type="text/css">
+<script src="controller/indexController.js"></script>
+<style>
+    .odd {
+        background-color: #a6e1ec
+    }
+
+    .even {
+        background-color: #dca7a7
+    }
+</style>
+<body>
+<div id="todoPanel" ng-controller="defaultCtrl" class="panel">
+    <h3 class="panel-header">To Do List </h3>
+    <!--ng-bind绑定元素的innerText属性-->
+    <div>there are <strong ng-bind="todos.length"></strong> items.</div>
+    <div>there are {{todos.length}} items.</div>
+    <div ng-bind-template="First:{{todos[0].action}}.Second:{{todos[1].action}}"></div>
+    <div ng-non-bindable>there are {{todos.length}} items.</div>
+    <div class="form-group well">
+        <label for="firstItem">Set First Itm</label>
+        <input type="text" ng-model="todos[0].action" class="form-control"/>
+    </div>
+    <!--<div class="well">-->
+    <!--<div class="checkbox">-->
+    <!--<label>-->
+    <!--<input type="checkbox" ng-model="showList">use the list view-->
+    <!--</label>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<ng-include src="viewFile()"></ng-include>-->
+
+
+    <div class="well">
+        <div class="radio" ng-repeat="button in ['None','Table','List']">
+            <label>
+                <input type="radio" name="aa" ng-model="data.a" value="{{button}}">
+                {{button}}
+            </label>
+        </div>
+    </div>
+    <div ng-switch on="data.a">
+        <div ng-switch-when="Table">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Action</th>
+                    <th>Done</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in todos" ng-class="$odd?'odd':'even'" ng-cloak>
+                    <td>{{$index+1}}</td>
+                    <td ng-repeat="prop in item">
+                        {{prop}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-switch-when="List">
+            <ol>
+                <li ng-repeat="item in todos">
+                    {{item.action}}<span ng-if="item.complete">Done</span>
+                </li>
+            </ol>
+        </div>
+        <div ng-switch-default>
+            Select another option to a display a layout
+        </div>
+    </div>
+</div>
+</body>
+</html>
